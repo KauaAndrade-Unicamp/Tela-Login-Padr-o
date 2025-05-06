@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login/Registro - Kintech Balanças</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background-color: #111111;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 100;
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .auth-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 40px 20px;
+            margin-top: 80px; /* Adiciona espaço para o header fixo */
+        }
+
+        .auth-box {
+            background-color: #252525;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 500px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .auth-tabs {
+            display: flex;
+            width: 100%;
+            border-bottom: 1px solid #333;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            color: #999;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            background-color: #1e1e1e;
+        }
+
+        .auth-tab.active {
+            background-color: #252525;
+            color: #4a90e2;
+            border-bottom: 3px solid #4a90e2;
+        }
+
+        .form-container {
+            padding: 40px;
+        }
+
+        .auth-title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #4a90e2;
+            font-size: 1.8em;
+            position: relative;
+        }
+
+        .auth-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: #4a90e2;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: #4a90e2;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            color: white;
+            padding: 14px 14px 14px 45px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+        }
+
+        .form-group .form-icon {
+            position: absolute;
+            left: 15px;
+            top: 47px;
+            color: #4a90e2;
+        }
+
+        .auth-btn {
+            width: 100%;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .auth-btn:hover {
+            background-color: #3a7bd5;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: #777;
+        }
+
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: #333;
+        }
+
+        .auth-divider span {
+            padding: 0 15px;
+            font-size: 0.9em;
+        }
+
+        .social-auth {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #1e1e1e;
+            color: white;
+            font-size: 1.2em;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .social-btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .social-btn.google {
+            color: #DB4437;
+        }
+
+        .social-btn.facebook {
+            color: #4267B2;
+        }
+
+        .social-btn.linkedin {
+            color: #0077B5;
+        }
+
+        .auth-footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #777;
+            font-size: 0.9em;
+        }
+
+        .auth-footer a {
+            color: #4a90e2;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-container input {
+            margin-right: 10px;
+            accent-color: #4a90e2;
+            width: 18px;
+            height: 18px;
+        }
+
+        .auth-panel {
+            display: none;
+        }
+
+        .auth-panel.active {
+            display: block;
+        }
+
+        .forgot-password {
+            text-align: right;
+            margin-top: -15px;
+            margin-bottom: 20px;
+        }
+
+        .forgot-password a {
+            color: #4a90e2;
+            font-size: 0.9em;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: #111111;
+            padding: 20px 5%;
+            text-align: center;
+            color: #777;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .auth-box {
+                width: 90%;
+            }
+
+            .form-container {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <h2 style="color: #0077B5;">Kintech</h2>
+            </div>
+        </div>
+    </header>
+
+    <div class="auth-container">
+        <div class="auth-box">
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="login-tab">Login</div>
+                <div class="auth-tab" id="register-tab">Registro</div>
+            </div>
+            <div class="form-container">
+                <!-- Login Panel -->
+                <div class="auth-panel active" id="login-panel">
+                    <h2 class="auth-title">Bem-vindo de volta</h2>
+                    <form>
+                        <div class="form-group">
+                            <label for="login-email">Email</label>
+                            <i class="fas fa-envelope form-icon"></i>
+                            <input type="email" id="login-email" placeholder="Digite seu email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password">Senha</label>
+                            <i class="fas fa-lock form-icon"></i>
+                            <input type="password" id="login-password" placeholder="Digite sua senha" required>
+                        </div>
+                        <div class="forgot-password">
+                            <a href="#">Esqueceu a senha?</a>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="remember-me">
+                            <label for="remember-me">Lembrar-me</label>
+                        </div>
+                        <button type="submit" class="auth-btn">Entrar</button>
+                    </form>
+                    <div class="auth-divider">
+                        <span>ou continue com</span>
+                    </div>
+                    <div class="social-auth">
+                        <div class="social-btn google">
+                            <i class="fab fa-google"></i>
+                        </div>
+                        <div class="social-btn facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </div>
+                        <div class="social-btn linkedin">
+                            <i class="fab fa-linkedin-in"></i>
+                        </div>
+                    </div>
+                    <div class="auth-footer">
+                        Ainda não tem uma conta? <a href="#" id="goto-register">Registre-se</a>
+                    </div>
+                </div>
+
+                <!-- Register Panel -->
+                <div class="auth-panel" id="register-panel">
+                    <h2 class="auth-title">Crie sua conta</h2>
+                    <form>
+                        <div class="form-group">
+                            <label for="register-name">Nome completo</label>
+                            <i class="fas fa-user form-icon"></i>
+                            <input type="text" id="register-name" placeholder="Digite seu nome completo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-email">Email</label>
+                            <i class="fas fa-envelope form-icon"></i>
+                            <input type="email" id="register-email" placeholder="Digite seu email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-phone">Telefone</label>
+                            <i class="fas fa-phone form-icon"></i>
+                            <input type="tel" id="register-phone" placeholder="(XX) XXXXX-XXXX" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-password">Senha</label>
+                            <i class="fas fa-lock form-icon"></i>
+                            <input type="password" id="register-password" placeholder="Crie uma senha forte" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-confirm-password">Confirme a senha</label>
+                            <i class="fas fa-lock form-icon"></i>
+                            <input type="password" id="register-confirm-password" placeholder="Confirme sua senha" required>
+                        </div>
+                        <div class="checkbox-container">
+                            <input type="checkbox" id="terms" required>
+                            <label for="terms">Eu concordo com os <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a></label>
+                        </div>
+                        <button type="submit" class="auth-btn">Criar Conta</button>
+                    </form>
+                    <div class="auth-footer">
+                        Já tem uma conta? <a href="#" id="goto-login">Faça login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Kintech Balanças, Troncos e Comércio LTDA. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginTab = document.getElementById('login-tab');
+            const registerTab = document.getElementById('register-tab');
+            const loginPanel = document.getElementById('login-panel');
+            const registerPanel = document.getElementById('register-panel');
+            const gotoLogin = document.getElementById('goto-login');
+            const gotoRegister = document.getElementById('goto-register');
+
+            // Phone number mask
+            document.getElementById('register-phone').addEventListener('input', function(e) {
+                let input = e.target;
+                input.value = input.value.replace(/\D/g, '');
+                
+                if (input.value.length > 11) {
+                    input.value = input.value.slice(0, 11);
+                }
+                
+                if (input.value.length >= 2) {
+                    input.value = '(' + input.value.slice(0, 2) + ')' + input.value.slice(2);
+                }
+                
+                if (input.value.length >= 9) {
+                    input.value = input.value.slice(0, 9) + '-' + input.value.slice(9);
+                }
+            });
+
+            // Tab switching functions
+            function switchToLogin() {
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+                loginPanel.classList.add('active');
+                registerPanel.classList.remove('active');
+            }
+
+            function switchToRegister() {
+                registerTab.classList.add('active');
+                loginTab.classList.remove('active');
+                registerPanel.classList.add('active');
+                loginPanel.classList.remove('active');
+            }
+
+            // Event listeners
+            loginTab.addEventListener('click', switchToLogin);
+            registerTab.addEventListener('click', switchToRegister);
+            gotoLogin.addEventListener('click', function(e) {
+                e.preventDefault();
+                switchToLogin();
+            });
+            gotoRegister.addEventListener('click', function(e) {
+                e.preventDefault();
+                switchToRegister();
+            });
+
+            // Form validation for register
+           
+        });
+    </script>
+</body>
+</html>
