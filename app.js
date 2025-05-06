@@ -13,6 +13,9 @@ app.use(express.json())
 //Models
 const User = require('./models/User')
 
+//Config public folder
+const path = require('path')
+app.use(express.static(path.join(__dirname, 'public')))
 
 // Open route 
 app.get('/', (req, res) => {
@@ -22,7 +25,7 @@ app.get('/', (req, res) => {
 app.get('/site', (req, res) => {
 
     // retornar arquivo html
-    res.sendFile(__dirname + '/index.html')
+    res.sendFile(path.join(__dirname, 'public', 'index.html'))
     res.status(200)
 
 })
