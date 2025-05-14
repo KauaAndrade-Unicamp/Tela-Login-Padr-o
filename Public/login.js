@@ -46,8 +46,10 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value; 
     const errorDiv = document.getElementById('login-error');
+    const rightDiv = document.getElementById('login-right')
 
     // Limpa mensagens anteriores
+    rightDiv.textContent = '';
     errorDiv.textContent = '';
 
     try{
@@ -68,7 +70,8 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
             return;
         }  
         alert('Login realizado com sucesso!');
-        window.location.href = '/home'; // Redireciona para a página inicial após o login bem-sucedido
+        rightDiv.textContent.href = 'Login Realizado'
+        window.location.href = '/home'; 
         // exemplo
     } catch (err) {
         errorDiv.textContent = 'Erro de conexão com o servidor.';
