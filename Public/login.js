@@ -67,6 +67,7 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
         if (!response.ok) {
             errorDiv.textContent = data.msg || 'Erro ao fazer login.';
             document.getElementById('password').value = '';
+            document.getElementById('email').value = '';
             // Limpa o campo de senha   
             return;
         }

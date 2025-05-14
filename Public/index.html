@@ -3,20 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Login | Acesse sua conta</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Login | Acesse sua conta</title>
+    <link href="https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #6366f1;
+            --primary-hover: #4f46e5;
+            --bg-color: #f9fafb;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+            --text-light: #6b7280;
+            --border-color: #e5e7eb;
+            --input-bg: #f3f4f6;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
         body {
-            background-color: #1a1a1a;
-            color: white;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -27,8 +39,8 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 5%;
-            background-color: #111111;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            background-color: var(--card-bg);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             position: fixed;
             top: 0;
             left: 0;
@@ -37,8 +49,9 @@
             z-index: 100;
         }
 
-        .logo img {
-            height: 40px;
+        .logo h2 {
+            color: var(--primary-color);
+            font-weight: 700;
         }
 
         .auth-container {
@@ -48,13 +61,13 @@
             justify-content: center;
             flex: 1;
             padding: 40px 20px;
-            margin-top: 80px; /* Adiciona espaço para o header fixo */
+            margin-top: 80px;
         }
 
         .auth-box {
-            background-color: #252525;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            background-color: var(--card-bg);
+            border-radius: 1rem;
+            box-shadow: var(--shadow);
             width: 100%;
             max-width: 500px;
             overflow: hidden;
@@ -64,7 +77,7 @@
         .auth-tabs {
             display: flex;
             width: 100%;
-            border-bottom: 1px solid #333;
+            border-bottom: 1px solid var(--border-color);
         }
 
         .auth-tab {
@@ -72,16 +85,16 @@
             padding: 20px;
             text-align: center;
             cursor: pointer;
-            color: #999;
+            color: var(--text-light);
             font-weight: 500;
             transition: all 0.3s ease;
-            background-color: #1e1e1e;
+            background-color: var(--bg-color);
         }
 
         .auth-tab.active {
-            background-color: #252525;
-            color: #4a90e2;
-            border-bottom: 3px solid #4a90e2;
+            background-color: var(--card-bg);
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
         }
 
         .form-container {
@@ -91,20 +104,10 @@
         .auth-title {
             text-align: center;
             margin-bottom: 30px;
-            color: #4a90e2;
+            color: var(--text-color);
             font-size: 1.8em;
             position: relative;
-        }
-
-        .auth-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 3px;
-            background-color: #4a90e2;
+            font-weight: 700;
         }
 
         .form-group {
@@ -115,58 +118,84 @@
         .form-group label {
             display: block;
             margin-bottom: 10px;
-            color: #4a90e2;
+            color: var(--text-color);
             font-weight: 500;
+            font-size: 0.875rem;
         }
 
         .form-group input {
             width: 100%;
-            background-color: #1e1e1e;
-            border: 1px solid #333;
-            color: white;
-            padding: 14px 14px 14px 45px;
-            border-radius: 5px;
-            transition: all 0.3s ease;
+            background-color: var(--input-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            padding: 0.75rem 1rem 0.75rem 2.5rem;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.2s ease-in-out;
         }
 
         .form-group input:focus {
             outline: none;
-            border-color: #4a90e2;
-            box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
         }
 
         .form-group .form-icon {
             position: absolute;
             left: 15px;
-            top: 47px;
-            color: #4a90e2;
+            top: 42px;
+            color: var(--primary-color);
         }
 
         .auth-btn {
             width: 100%;
-            background-color: #4a90e2;
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 14px 20px;
-            border-radius: 5px;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
             cursor: pointer;
             font-weight: 600;
-            font-size: 1em;
+            font-size: 1rem;
             transition: all 0.3s ease;
             margin-top: 10px;
+            position: relative;
+            overflow: hidden;
         }
 
         .auth-btn:hover {
-            background-color: #3a7bd5;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+            background-color: var(--primary-hover);
+        }
+
+        .auth-btn:after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transform: scale(10, 10);
+            opacity: 0;
+            transition: transform .5s, opacity 1s;
+        }
+
+        .auth-btn:active:after {
+            transform: scale(0, 0);
+            opacity: .3;
+            transition: 0s;
         }
 
         .auth-divider {
             display: flex;
             align-items: center;
             margin: 25px 0;
-            color: #777;
+            color: var(--text-light);
+            position: relative;
         }
 
         .auth-divider::before,
@@ -174,7 +203,7 @@
             content: '';
             flex: 1;
             height: 1px;
-            background-color: #333;
+            background-color: var(--border-color);
         }
 
         .auth-divider span {
@@ -192,42 +221,46 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
-            background-color: #1e1e1e;
-            color: white;
-            font-size: 1.2em;
-            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            transition: all 0.2s ease-in-out;
             cursor: pointer;
         }
 
         .social-btn:hover {
-            transform: translateY(-3px);
+            background-color: var(--input-bg);
         }
 
-        .social-btn.google {
+        .social-btn i {
+            font-size: 1.2em;
+        }
+
+        .social-btn.google i {
             color: #DB4437;
         }
 
-        .social-btn.facebook {
+        .social-btn.facebook i {
             color: #4267B2;
         }
 
-        .social-btn.linkedin {
+        .social-btn.linkedin i {
             color: #0077B5;
         }
 
         .auth-footer {
             text-align: center;
             margin-top: 30px;
-            color: #777;
-            font-size: 0.9em;
+            color: var(--text-light);
+            font-size: 0.875rem;
         }
 
         .auth-footer a {
-            color: #4a90e2;
+            color: var(--primary-color);
             text-decoration: none;
+            font-weight: 500;
             transition: all 0.3s ease;
         }
 
@@ -239,11 +272,12 @@
             display: flex;
             align-items: center;
             margin-bottom: 20px;
+            font-size: 0.875rem;
         }
 
         .checkbox-container input {
             margin-right: 10px;
-            accent-color: #4a90e2;
+            accent-color: var(--primary-color);
             width: 18px;
             height: 18px;
         }
@@ -263,10 +297,10 @@
         }
 
         .forgot-password a {
-            color: #4a90e2;
-            font-size: 0.9em;
+            color: var(--primary-color);
+            font-size: 0.875rem;
             text-decoration: none;
-            transition: all 0.3s ease;
+            font-weight: 500;
         }
 
         .forgot-password a:hover {
@@ -274,11 +308,50 @@
         }
 
         footer {
-            background-color: #111111;
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
             padding: 20px 5%;
             text-align: center;
-            color: #777;
+            color: var(--text-light);
             font-size: 0.9em;
+        }
+
+        #login-error, #register-error {
+            font-size: 14px;
+            color: #ef4444;
+            margin-bottom: 15px;
+        }
+
+        #login-right {
+            font-size: 14px;
+            color: #10b981;
+            margin-bottom: 15px;
+            background-color: rgba(16, 185, 129, 0.1);
+            padding: 8px;
+            border-radius: 0.5rem;
+            font-weight: bold;
+        }
+
+        .decoration {
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background-color: rgba(99, 102, 241, 0.1);
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .decoration-2 {
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            width: 200px;
+            height: 200px;
+            background-color: rgba(99, 102, 241, 0.1);
+            border-radius: 50%;
+            z-index: 0;
         }
 
         @media (max-width: 768px) {
@@ -296,13 +369,15 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <h2 style="color: #0077B5;">Kintech</h2>
+                <h2>Tela de Login</h2>
             </div>
         </div>
     </header>
 
     <div class="auth-container">
         <div class="auth-box">
+            <div class="decoration"></div>
+            <div class="decoration-2"></div>
             <div class="auth-tabs">
                 <div class="auth-tab active" id="login-tab">Login</div>
                 <div class="auth-tab" id="register-tab">Registro</div>
@@ -322,7 +397,7 @@
                             <i class="fas fa-lock form-icon"></i>
                             <input type="password" id="password" placeholder="Digite sua senha" required>
                         </div>
-                        <div id="login-error" style="font-size: 14px; color: red; margin-bottom: 15px;"></div>
+                        <div id="login-error"></div>
                         <div class="forgot-password">
                             <a href="#">Esqueceu a senha?</a>
                         </div>
@@ -386,8 +461,8 @@
                         </div>
                         <button type="submit" class="auth-btn">Criar Conta</button>
                     </form>
-                    <div id="login-right" style="font-size: 14px; color: rgb(255, 255, 255); margin-bottom: 15px; background-color: green; font-weight: bold;"></div>
-                    <div id="register-error" style="font-size: 14px; color: red; margin-bottom: 15px;"></div>
+                    <div id="login-right"></div>
+                    <div id="register-error"></div>
                     <div class="auth-footer">
                         Já tem uma conta? <a href="#" id="goto-login">Faça login</a>
                     </div>
