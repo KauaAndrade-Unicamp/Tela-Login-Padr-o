@@ -4,11 +4,14 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const cookieParser = require('cookie-parser')
+
 
 const app = express()
 
 //Config Json response
 app.use(express.json())
+app.use(cookieParser())
 
 //Models
 const User = require('./models/User')
@@ -47,12 +50,11 @@ app.get("/user/:id", checkToken, async (req, res) => {
 })
 
 function checkToken(req, res, next) {
-    const authHeader = req.headers['authorization']
-    const token = authHeader && authHeader.split(" ")[1]
+    const token = req.cookies.token
 
     if (!token) {
         if (req.accepts('html')) {
-            return res.redirect('/site') // ou /login, se tiver
+            return res.redirect('/site')
         } else {
             return res.status(401).json({ msg: 'Acesso Bloqueado!' })
         }
@@ -60,16 +62,22 @@ function checkToken(req, res, next) {
 
     try {
         const secret = process.env.SECRET
-        jwt.verify(token, secret)
+        const decoded = jwt.verify(token, secret)
+        req.userId = decoded.id // opcional: guardar id
         next()
     } catch (error) {
         if (req.accepts('html')) {
-            return res.redirect('/site') // ou /login
+            return res.redirect('/site')
         } else {
             return res.status(400).json({ msg: "Token inválido" })
         }
     }
 }
+
+app.get('/auth/logout', (req, res) => {
+    res.clearCookie('token')
+    res.status(200).json({ msg: 'Logout efetuado' })
+})
 
 //Reister User
 app.post('/auth/register', async (req, res) => {
@@ -175,10 +183,16 @@ app.post('/auth/login', async (req, res) => {
             secret,
         )
 
-        res.status(200).json({ msg: "Autenticação realizada com sucesso", token })
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: false, // coloque true se for HTTPS em produção
+            sameSite: 'Strict',
+            maxAge: 1000 * 60 * 60 * 24 // 1 dia
+        })
+        res.status(200).json({ msg: "Autenticação realizada com sucesso" });
 
     } catch (err) {
-        console.log(error)
+        console.log(err)
 
         res.status(500).json({ msg: 'Erro ao logar!' });
 

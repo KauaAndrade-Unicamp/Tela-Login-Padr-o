@@ -1,19 +1,19 @@
 //Receive Register forms
 //Receive forms
-document.getElementById('register-form').addEventListener('submit', async (event) =>{
+document.getElementById('register-form').addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const name = document.getElementById('register-name').value;
     const email = document.getElementById('register-email').value;
     const telefone = document.getElementById('register-phone').value;
-    const password = document.getElementById('register-password').value; 
-    const confirmpassword = document.getElementById('register-confirm-password').value; 
+    const password = document.getElementById('register-password').value;
+    const confirmpassword = document.getElementById('register-confirm-password').value;
     const errorDiv = document.getElementById('register-error');
 
     // Limpa mensagens anteriores
     errorDiv.textContent = '';
 
-    try{
+    try {
         const response = await fetch('http://localhost:3000/auth/register', {
             method: 'POST',
             headers: {
@@ -26,9 +26,9 @@ document.getElementById('register-form').addEventListener('submit', async (event
 
         if (!response.ok) {
             errorDiv.textContent = data.msg || 'Erro ao fazer cadastro.';
-          
+
             return;
-        } 
+        }
         switchToLogin();
         alert('Cadastro realizado com sucesso!');
         // exemplo
@@ -40,11 +40,11 @@ document.getElementById('register-form').addEventListener('submit', async (event
 
 
 //Receive forms
-document.getElementById('login-form').addEventListener('submit', async (event) =>{
+document.getElementById('login-form').addEventListener('submit', async (event) => {
     event.preventDefault();
 
     const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value; 
+    const password = document.getElementById('password').value;
     const errorDiv = document.getElementById('login-error');
     const rightDiv = document.getElementById('login-right')
 
@@ -52,12 +52,13 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
     rightDiv.textContent = '';
     errorDiv.textContent = '';
 
-    try{
+    try {
         const response = await fetch('http://localhost:3000/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
+            credentials: 'include', 
             body: JSON.stringify({ email, password })
         });
 
@@ -65,20 +66,20 @@ document.getElementById('login-form').addEventListener('submit', async (event) =
 
         if (!response.ok) {
             errorDiv.textContent = data.msg || 'Erro ao fazer login.';
-            document.getElementById('password').value = ''; 
+            document.getElementById('password').value = '';
             // Limpa o campo de senha   
             return;
-        }  
+        }
         alert('Login realizado com sucesso!');
         rightDiv.textContent.href = 'Login Realizado'
-        window.location.href = '/home'; 
+        window.location.href = '/home';
         // exemplo
     } catch (err) {
         errorDiv.textContent = 'Erro de conexão com o servidor.';
     }
 })
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const loginTab = document.getElementById('login-tab');
     const registerTab = document.getElementById('register-tab');
     const loginPanel = document.getElementById('login-panel');
@@ -87,39 +88,39 @@ document.addEventListener('DOMContentLoaded', function() {
     const gotoRegister = document.getElementById('goto-register');
 
     // Phone number mask
-    document.getElementById('register-phone').addEventListener('input', function(e) {
+    document.getElementById('register-phone').addEventListener('input', function (e) {
         let input = e.target;
         input.value = input.value.replace(/\D/g, '');
-        
+
         if (input.value.length > 11) {
             input.value = input.value.slice(0, 11);
         }
-        
+
         if (input.value.length >= 2) {
             input.value = '(' + input.value.slice(0, 2) + ')' + input.value.slice(2);
         }
-        
+
         if (input.value.length >= 9) {
             input.value = input.value.slice(0, 9) + '-' + input.value.slice(9);
         }
     });
 
-   
+
 
     // Event listeners
     loginTab.addEventListener('click', switchToLogin);
     registerTab.addEventListener('click', switchToRegister);
-    gotoLogin.addEventListener('click', function(e) {
+    gotoLogin.addEventListener('click', function (e) {
         e.preventDefault();
         switchToLogin();
     });
-    gotoRegister.addEventListener('click', function(e) {
+    gotoRegister.addEventListener('click', function (e) {
         e.preventDefault();
         switchToRegister();
     });
 
     // Form validation for register
-   
+
 });
 
 function switchToLogin() {
