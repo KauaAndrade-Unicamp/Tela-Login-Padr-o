@@ -46,26 +46,31 @@ app.get("/user/:id", checkToken, async (req, res) => {
     res.status(200).json({ user })
 })
 
-function checkToken(req,res, next){
-
+function checkToken(req, res, next) {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(" ")[1]
 
-    if (!token) { 
-        return res.status(401).json({ msg: ' Acesso Bloqueado!' })
+    if (!token) {
+        if (req.accepts('html')) {
+            return res.redirect('/site') // ou /login, se tiver
+        } else {
+            return res.status(401).json({ msg: 'Acesso Bloqueado!' })
+        }
     }
-    try{
 
+    try {
         const secret = process.env.SECRET
-
         jwt.verify(token, secret)
-
         next()
-
-    }catch(error){
-        res.status(400).json({msg:"Token Invalido" })
+    } catch (error) {
+        if (req.accepts('html')) {
+            return res.redirect('/site') // ou /login
+        } else {
+            return res.status(400).json({ msg: "Token inválido" })
+        }
     }
 }
+
 //Reister User
 app.post('/auth/register', async (req, res) => {
 
